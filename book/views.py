@@ -51,8 +51,12 @@ def update_review(request):
         if not existing_rating(book_id, user_id):
             return Response("No rating is available for the book with given id.", status=status.HTTP_400_BAD_REQUEST)
         
-        cursor.execute("UPDATE book_review SET rating = %s WHERE book_id = %s AND user_id = %s", [rating, book_id, user_id])
-    
+        try:
+            cursor.execute("UPDATE book_review SET rating = %s WHERE book_id = %s AND user_id = %s", [rating, book_id, user_id])
+        except IntegrityError as ex:
+            if ex.__cause__.diag.constraint_name == "rating_check":
+                return Response("The rating must be between 1 and 5.", status=status.HTTP_400_BAD_REQUEST)
+        
     return Response({"book_id": book_id, "rating": rating})
 
 
@@ -103,7 +107,7 @@ def book_availability(book_id):
 
 def existing_rating(book_id, user_id):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT id from book_review WHERE id = %s AND user_id = %s", [book_id, user_id])
+        cursor.execute("SELECT id from book_review WHERE book_id = %s AND user_id = %s", [book_id, user_id])
         if cursor.rowcount:
             return True
         
