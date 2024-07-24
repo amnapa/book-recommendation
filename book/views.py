@@ -103,7 +103,7 @@ def book_availability(book_id):
 
 def existing_rating(book_id, user_id):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT id from book_book WHERE id = %s AND user_id = %s", [book_id, user_id])
+        cursor.execute("SELECT id from book_review WHERE id = %s AND user_id = %s", [book_id, user_id])
         if cursor.rowcount:
             return True
         
