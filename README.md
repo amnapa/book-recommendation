@@ -1,4 +1,4 @@
-# Foobar
+# Book Recommendation
 
 This simple app allows authenticated users to rate books and then get suggestion for their favorite genre.
 
