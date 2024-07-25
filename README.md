@@ -26,7 +26,7 @@ Then you can send a your requests to available endpoints described below:
 | /api/review/add       |   POST       | Create a review record for the given book with a rating between 1 and 5 |
 | /api/review/update    |  PATCH       | Update rating for an existing review                                    |
 | /api/review/delete    |  DELETE      | Delete a review for the given book                                      |
-| /api/suggest          |  DELETE      | Suggest a list of books based on user's favorite genre                  |
+| /api/suggest          |  GET         | Suggest a list of books based on user's favorite genre                  |
 
 ## License
 
